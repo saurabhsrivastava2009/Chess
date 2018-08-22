@@ -24,6 +24,9 @@ public class ChessGame {
 		else if(playerType.equals("Pawn")){
 			return new Pawn();
 		}
+		else if(playerType.equals("Rook")){
+			return new Rook();
+		}
 		throw new InvalidPlayer(playerType +" is not a valid chess piece");
 	}
 
