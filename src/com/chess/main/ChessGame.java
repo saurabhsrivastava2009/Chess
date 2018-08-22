@@ -1,6 +1,7 @@
 package com.chess.main;
 
 import java.util.Scanner;
+import java.util.Set;
 
 import com.chess.gameingredients.*;
 
@@ -13,7 +14,11 @@ public class ChessGame {
 		System.out.println("Enter your input:");
 		String input = sc.nextLine();
 		String[] inputSplit=input.split(" ");
-		System.out.println(findPlayer(inputSplit[0]).movement(inputSplit[1]));
+		Set<String> set =findPlayer(inputSplit[0]).movement(inputSplit[1]);
+		System.out.println(set);
+		b.movementsOnBoard(inputSplit[1]);
+		b.movementsOnBoard(set);
+		b.displayBoard();
 		
 	}
 
@@ -26,6 +31,9 @@ public class ChessGame {
 		}
 		else if(playerType.equals("Rook")){
 			return new Rook();
+		}
+		else if(playerType.equals("Queen")){
+			return new Queen();
 		}
 		throw new InvalidPlayer(playerType +" is not a valid chess piece");
 	}
