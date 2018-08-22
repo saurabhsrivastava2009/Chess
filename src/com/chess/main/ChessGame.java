@@ -1,5 +1,15 @@
 package com.chess.main;
 
+/*
+ * Simple Chess game.
+ * Input	: "Piece-type position-on-board"	:	E.g. "Pawn E1"
+ * Output	: "[Possible move]"					:	E.g. "[E2]"
+ * 
+ * @author	: Saurabh Srivastava
+ * @date	: 21 Aug 2018
+ * 
+ */
+
 import java.util.Scanner;
 import java.util.Set;
 
@@ -13,29 +23,33 @@ public class ChessGame {
 		b.displayBoard();
 		System.out.println("Enter your input:");
 		String input = sc.nextLine();
-		String[] inputSplit=input.split(" ");
-		Set<String> set =findPlayer(inputSplit[0]).movement(inputSplit[1]);
+		String[] inputSplit = input.split(" ");
+		Set<String> set = findPlayer(inputSplit[0]).movement(inputSplit[1]);
 		System.out.println(set);
 		b.movementsOnBoard(inputSplit[1]);
 		b.movementsOnBoard(set);
+		/*
+		 * position enclosed by circular bracket is the input position and
+		 * position enclosed by square bracket is the possible move a player can
+		 * make depending upon the piece.
+		 */
 		b.displayBoard();
-		
+
 	}
 
 	private static Player findPlayer(String playerType) {
-		if(playerType.equals("King")){
+		if (playerType.equals("King")) {
 			return new King();
-		}
-		else if(playerType.equals("Pawn")){
+		} else if (playerType.equals("Pawn")) {
 			return new Pawn();
-		}
-		else if(playerType.equals("Rook")){
+		} else if (playerType.equals("Rook")) {
 			return new Rook();
-		}
-		else if(playerType.equals("Queen")){
+		} else if (playerType.equals("Queen")) {
 			return new Queen();
+		} else if (playerType.equals("Bishop")) {
+			return new Bishop();
 		}
-		throw new InvalidPlayer(playerType +" is not a valid chess piece");
+		throw new InvalidPlayer(playerType + " is not a valid chess piece");
 	}
 
 }

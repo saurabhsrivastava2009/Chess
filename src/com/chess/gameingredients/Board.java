@@ -28,24 +28,24 @@ public class Board {
 			for (int j = 0; j < 8; j++) {
 				for (String s : set) {
 					if (position[i][j].equals(s)) {
-						position[i][j]="["+position[i][j]+"]";
+						position[i][j] = "[" + position[i][j] + "]";
 					}
 				}
 			}
 		}
-		
+
 	}
-	
+
 	public void movementsOnBoard(String pos) {
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
-				
-					if (position[i][j].equals(pos)) {
-						position[i][j]="("+position[i][j]+")";
-					}
-				
+
+				if (position[i][j].equals(pos)) {
+					position[i][j] = "(" + position[i][j] + ")";
+				}
+
 			}
 		}
-		
+
 	}
 }

@@ -3,7 +3,7 @@ package com.chess.gameingredients;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-public class Queen extends Player {
+public class Bishop extends Player {
 
 	@Override
 	public Set<String> movement(String position) {
@@ -19,7 +19,6 @@ public class Queen extends Player {
 		char cTemp = alphaP;
 		for (char a = (char) (alphaP - (char) (alphaP - 1)); a <= 'H'; a++) {
 			if (a >= 'A' && a <= 'H') {
-				set.add(String.valueOf(a) + String.valueOf(digitP));
 				if (tempDigitDec > 1 && a > 'A') {
 					tempDigitDec = tempDigitDec - 1;
 					charDec = (char) (charDec - 1);
@@ -49,7 +48,6 @@ public class Queen extends Player {
 			charDec = alphaP;
 			charInc = alphaP;
 			for (int j = digitP - (digitP - 1); j <= 8; j++) {
-				set.add(String.valueOf(alphaP) + String.valueOf(j));
 				if (tempDigitInc >= 1 && tempDigitInc <= 8 && alphaP >= 'A' && alphaP <= 'H') {
 					tempDigitDec = tempDigitDec - 1;
 					charDec = (char) (charDec + 1);
@@ -58,15 +56,9 @@ public class Queen extends Player {
 					}
 				}
 			}
-		} else {
-			for (int j = 2; j <= 8; j++) {
-				set.add(String.valueOf(alphaP) + String.valueOf(j));
-			}
 		}
-
 		set.remove(position);
 		return set;
 
 	}
-
 }
