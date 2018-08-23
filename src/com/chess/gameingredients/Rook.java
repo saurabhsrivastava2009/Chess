@@ -3,30 +3,33 @@ package com.chess.gameingredients;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-public class Rook extends Player {
+import com.chess.gameplay.Moves;
 
+public class Rook extends Piece {
+
+	/*
+	 * (non-Javadoc)
+	 * @see com.chess.gameingredients.Piece#movement(java.lang.String)
+	 */
 	@Override
-	public Set<String> movement(String position) {
-		Set<String> set = new LinkedHashSet<String>();
-		char alphaP = separatChar(position);
-		int digitP = separateInt(position);
-		for (char a = (char) (alphaP - (char) (alphaP - 1)); a <= 'H'; a++) {
-			if (a >= 'A' && a <= 'H') {
-				set.add(String.valueOf(a) + String.valueOf(digitP));
-			}
-		}
-		if (digitP != 1) {
-			for (int j = digitP - (digitP - 1); j <= 8; j++) {
-				set.add(String.valueOf(alphaP) + String.valueOf(j));
-			}
-		} else {
-			for (int j = 2; j <= 8; j++) {
-				set.add(String.valueOf(alphaP) + String.valueOf(j));
-			}
-		}
+	public Set<String> movement(String currentPosition) {
+		Set<String> addPosibilePosition = new LinkedHashSet<String>();
+		/*
+		 * Method to separate current position of piece into character and decimal part.
+		 * alphaP holds the character part of the current position
+		 * digitP holds the decimal part of the current position
+		 * Splitting starts here-----------------------------------
+		 */
+		char alphaP = separateChar(currentPosition);
+		int digitP = separateInt(currentPosition);
+		//Ends here------------------------------------------------
+		setPieceTypeInString(this.getClass().getSimpleName());
+		Moves moves = new Moves(alphaP, digitP);
+		addPosibilePosition.addAll(moves.moveLoopAllHorizontalDiagonalExceptUpwardRightDiagonal(this, addPosibilePosition));
+		addPosibilePosition.addAll(moves.moveLoopAllVerticalOrDiagonalMovementInUpwardRight(this, addPosibilePosition));
 
-		set.remove(position);
-		return set;
+		addPosibilePosition.remove(currentPosition);
+		return addPosibilePosition;
 	}
 
 }

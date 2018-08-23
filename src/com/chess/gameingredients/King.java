@@ -4,12 +4,17 @@ import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-public class King extends Player {
+public class King extends Piece {
 
+	/*
+	 * (non-Javadoc)
+	 * @see com.chess.gameingredients.Piece#movement(java.lang.String)
+	 */
 	@Override
-	public Set<String> movement(String position) {
-		char alphaP = separatChar(position);
-		int digitP = separateInt(position);
+	public Set<String> movement(String currentPosition) {
+		char alphaP = separateChar(currentPosition);
+		int digitP = separateInt(currentPosition);
+		setPieceTypeInString(this.getClass().getSimpleName());
 		Set<String> set = new LinkedHashSet<String>();
 		if (digitP != 8) {
 			for (char a = (char) (alphaP - 1); a <= alphaP + 1; a++) {
@@ -43,7 +48,7 @@ public class King extends Player {
 				}
 			}
 		}
-		set.remove(position);
+		set.remove(currentPosition);
 
 		return set;
 	}

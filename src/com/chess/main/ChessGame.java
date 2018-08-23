@@ -13,6 +13,7 @@ package com.chess.main;
 import java.util.Scanner;
 import java.util.Set;
 
+import com.chess.customexception.InvalidPieceException;
 import com.chess.gameingredients.*;
 
 public class ChessGame {
@@ -37,19 +38,23 @@ public class ChessGame {
 
 	}
 
-	private static Player findPlayer(String playerType) {
-		if (playerType.equals("King")) {
+	/*
+	 * method to determine the type of piece
+	 * @return instance of the piece
+	 */
+	private static Piece findPlayer(String pieceType) {
+		if (pieceType.equals("King")) {
 			return new King();
-		} else if (playerType.equals("Pawn")) {
+		} else if (pieceType.equals("Pawn")) {
 			return new Pawn();
-		} else if (playerType.equals("Rook")) {
+		} else if (pieceType.equals("Rook")) {
 			return new Rook();
-		} else if (playerType.equals("Queen")) {
+		} else if (pieceType.equals("Queen")) {
 			return new Queen();
-		} else if (playerType.equals("Bishop")) {
+		} else if (pieceType.equals("Bishop")) {
 			return new Bishop();
 		}
-		throw new InvalidPlayer(playerType + " is not a valid chess piece");
+		throw new InvalidPieceException(pieceType + " is not a valid chess piece");
 	}
 
 }
