@@ -25,10 +25,10 @@ public class Queen extends Piece {
 		char alphaP = separateChar(currentPosition);
 		int digitP = separateInt(currentPosition);
 		//Ends here------------------------------------------------
-		setPieceTypeInString(this.getClass().getSimpleName());
+		setPieceType(this.getClass().getSimpleName());
 		Moves moves = new Moves(alphaP, digitP);
-		addPosibilePosition.addAll(moves.moveLoopAllHorizontalDiagonalExceptUpwardRightDiagonal(this, addPosibilePosition));
-		addPosibilePosition.addAll(moves.moveLoopAllVerticalOrDiagonalMovementInUpwardRight(this, addPosibilePosition));
+		addPosibilePosition.addAll(moves.moveHorizontalDiagonalExceptUpwardRight(this, addPosibilePosition));
+		addPosibilePosition.addAll(moves.moveVerticalOrDiagonalWithUpwardRight(this, addPosibilePosition));
 		
 		addPosibilePosition.remove(currentPosition);
 		return addPosibilePosition;

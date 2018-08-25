@@ -14,8 +14,9 @@ public class Pawn extends Piece {
 		Set<String> set = new LinkedHashSet<String>();
 		char alphaP = separateChar(currentPosition);
 		int digitP = separateInt(currentPosition);
-		setPieceTypeInString(this.getClass().getSimpleName());
-		if (digitP != 8) {
+		setPieceType(this.getClass().getSimpleName());
+		int lastDigitOnBoard = separateInt(new Board().getLastBoardPosition());
+		if (digitP != lastDigitOnBoard) {
 			set.add(String.valueOf(alphaP) + String.valueOf(digitP + 1));
 		}
 		set.remove(currentPosition);

@@ -14,36 +14,42 @@ public class King extends Piece {
 	public Set<String> movement(String currentPosition) {
 		char alphaP = separateChar(currentPosition);
 		int digitP = separateInt(currentPosition);
-		setPieceTypeInString(this.getClass().getSimpleName());
+		setPieceType(this.getClass().getSimpleName());
+		Board board = new Board();
+		
+		int lastDigitOnBoard = separateInt(board.getLastBoardPosition());
+		char lastCharOnBoard = separateChar(board.getLastBoardPosition());
+		char firstCharOnBoard = separateChar(board.getFirstBoardPosition());
+		int firstDigitOnBoard = separateInt(board.getFirstBoardPosition());
 		Set<String> set = new LinkedHashSet<String>();
-		if (digitP != 8) {
+		if (digitP != lastDigitOnBoard) {
 			for (char a = (char) (alphaP - 1); a <= alphaP + 1; a++) {
-				if (a >= 'A' && a <= 'H') {
+				if (a >= firstCharOnBoard && a <= lastCharOnBoard) {
 					set.add(String.valueOf(a) + String.valueOf(digitP + 1));
 					set.add(String.valueOf(a) + String.valueOf(digitP));
 				}
 			}
-			if (digitP != 1) {
+			if (digitP != firstDigitOnBoard) {
 				for (int j = digitP - 1; j <= digitP + 1; j++) {
-					if ((char) (alphaP - 1) >= 'A') {
+					if ((char) (alphaP - 1) >= firstCharOnBoard) {
 						set.add(String.valueOf((char) (alphaP - 1)) + String.valueOf(j));
 					}
 					set.add(String.valueOf(alphaP) + String.valueOf(j));
-					if ((char) (alphaP + 1) <= 'H') {
+					if ((char) (alphaP + 1) <= lastCharOnBoard) {
 						set.add(String.valueOf((char) (alphaP + 1)) + String.valueOf(j));
 					}
 				}
 			}
 		} else {
 			for (int j = digitP - 1; j <= digitP + 1; j++) {
-				if (j == 9) {
+				if (j == lastDigitOnBoard+1) {
 					break;
 				}
-				if ((char) (alphaP - 1) >= 'A') {
+				if ((char) (alphaP - 1) >= firstCharOnBoard) {
 					set.add(String.valueOf((char) (alphaP - 1)) + String.valueOf(j));
 				}
 				set.add(String.valueOf(alphaP) + String.valueOf(j));
-				if ((char) (alphaP + 1) <= 'H') {
+				if ((char) (alphaP + 1) <= lastCharOnBoard) {
 					set.add(String.valueOf((char) (alphaP + 1)) + String.valueOf(j));
 				}
 			}

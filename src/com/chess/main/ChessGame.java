@@ -25,10 +25,10 @@ public class ChessGame {
 		System.out.println("Enter your input:");
 		String input = sc.nextLine();
 		String[] inputSplit = input.split(" ");
-		Set<String> set = findPlayer(inputSplit[0]).movement(inputSplit[1]);
-		System.out.println(set);
+		Set<String> allPossiblePosition = findPlayer(inputSplit[0]).movement(inputSplit[1]);
+		System.out.println(allPossiblePosition);
 		b.movementsOnBoard(inputSplit[1]);
-		b.movementsOnBoard(set);
+		b.movementsOnBoard(allPossiblePosition);
 		/*
 		 * position enclosed by circular bracket is the input position and
 		 * position enclosed by square bracket is the possible move a player can
@@ -40,21 +40,30 @@ public class ChessGame {
 
 	/*
 	 * method to determine the type of piece
+	 * 
 	 * @return instance of the piece
 	 */
 	private static Piece findPlayer(String pieceType) {
-		if (pieceType.equals("King")) {
+		switch (pieceType) {
+		case "King":
 			return new King();
-		} else if (pieceType.equals("Pawn")) {
+
+		case "Pawn":
 			return new Pawn();
-		} else if (pieceType.equals("Rook")) {
+
+		case "Rook":
 			return new Rook();
-		} else if (pieceType.equals("Queen")) {
+
+		case "Queen":
 			return new Queen();
-		} else if (pieceType.equals("Bishop")) {
+
+		case "Bishop":
 			return new Bishop();
+
+		default:
+			throw new InvalidPieceException(pieceType + " is not a valid chess piece");
+
 		}
-		throw new InvalidPieceException(pieceType + " is not a valid chess piece");
 	}
 
 }

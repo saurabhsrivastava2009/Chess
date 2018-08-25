@@ -12,7 +12,7 @@ public class Bishop extends Piece {
 	 * @see com.chess.gameingredients.Piece#movement(java.lang.String)
 	 */
 	@Override
-	public Set<String> movement(String position) {
+	public Set<String> movement(String currentPosition) {
 
 		Set<String> addPosibilePosition = new LinkedHashSet<String>();
 		
@@ -22,15 +22,15 @@ public class Bishop extends Piece {
 		 * digitP holds the decimal part of the current position
 		 * Splitting starts here-----------------------------------
 		 */
-		char alphaP = separateChar(position);
-		int digitP = separateInt(position);
+		char alphaP = separateChar(currentPosition);
+		int digitP = separateInt(currentPosition);
 		//Ends here------------------------------------------------
-		setPieceTypeInString(this.getClass().getSimpleName());
+		setPieceType(this.getClass().getSimpleName());
 		Moves moves = new Moves(alphaP, digitP);
-		addPosibilePosition.addAll(moves.moveLoopAllHorizontalDiagonalExceptUpwardRightDiagonal(this, addPosibilePosition));
-		addPosibilePosition.addAll(moves.moveLoopAllVerticalOrDiagonalMovementInUpwardRight(this, addPosibilePosition));
+		addPosibilePosition.addAll(moves.moveHorizontalDiagonalExceptUpwardRight(this, addPosibilePosition));
+		addPosibilePosition.addAll(moves.moveVerticalOrDiagonalWithUpwardRight(this, addPosibilePosition));
 		
-		addPosibilePosition.remove(position);
+		addPosibilePosition.remove(currentPosition);
 		return addPosibilePosition;
 
 	}

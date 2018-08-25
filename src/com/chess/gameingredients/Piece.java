@@ -19,7 +19,7 @@ public abstract class Piece {
 	 * method to set the type of piece in String format, the input comes from different piece classes in
 	 * the form of String
 	 */
-	public void setPieceTypeInString(String pieceType) {
+	public void setPieceType(String pieceType) {
 		this.pieceType = pieceType;
 	}
 
@@ -36,14 +36,8 @@ public abstract class Piece {
 	 * 
 	 * @return integer part
 	 */
-	protected int separateInt(String currentPosition) {
-		for (int i = 0; i < currentPosition.length(); i++) {
-			char digit = currentPosition.charAt(i);
-			if (Character.isDigit(digit)) {
-				return Integer.valueOf(Character.toString(digit));
-			}
-		}
-		return -1;
+	public static int separateInt(String currentPosition) {
+		return Integer.valueOf(Character.toString(currentPosition.charAt(1)));
 	}
 
 	/*
@@ -51,13 +45,7 @@ public abstract class Piece {
 	 * 
 	 * @return character part
 	 */
-	protected char separateChar(String currentPosition) {
-		for (int i = 0; i < currentPosition.length(); i++) {
-			char alpha = currentPosition.charAt(i);
-			if (!Character.isDigit(alpha)) {
-				return alpha;
-			}
-		}
-		return 'a';
+	public static char separateChar(String currentPosition) {
+		return currentPosition.charAt(0);
 	}
 }

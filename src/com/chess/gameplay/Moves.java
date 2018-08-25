@@ -4,6 +4,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 import com.chess.gameingredients.Bishop;
+import com.chess.gameingredients.Board;
 import com.chess.gameingredients.Piece;
 import com.chess.gameingredients.Queen;
 import com.chess.gameingredients.Rook;
@@ -28,7 +29,14 @@ public class Moves {
 	private static char tempC;
 	private char alphaP;
 	private int digitP;
-
+	
+	private int lastDigitOnBoard;
+	private char lastCharOnBoard;
+	private char firstCharOnBoard;
+	private int firstDigitOnBoard;
+	
+	Board board = new Board();
+	
 	/*
 	 * Initialize each variable with character and digit part of the position in
 	 * order to perform manipulation
@@ -38,6 +46,11 @@ public class Moves {
 		tempDigitDec = tempDigitInc = dTemp = tempD = digitP;
 		this.alphaP = alphaP;
 		this.digitP = digitP;
+		
+		lastDigitOnBoard = Piece.separateInt(board.getLastBoardPosition());
+		lastCharOnBoard = Piece.separateChar(board.getLastBoardPosition());
+		firstCharOnBoard = Piece.separateChar(board.getFirstBoardPosition());
+		firstDigitOnBoard = Piece.separateInt(board.getFirstBoardPosition());
 	}
 
 	/*
@@ -46,10 +59,10 @@ public class Moves {
 	 * @returns set of possible moves
 	 */
 	private Set<String> moveUpwardLeftDiagonal(Set<String> addPosibilePosition, char a) {
-		if (tempDigitDec > 1 && a > 'A') {
+		if (tempDigitDec > firstDigitOnBoard && a > firstCharOnBoard) {
 			tempDigitDec = tempDigitDec - 1;
 			charDec = (char) (charDec - 1);
-			if (charDec >= 'A') {
+			if (charDec >= firstCharOnBoard) {
 				addPosibilePosition.add(String.valueOf(charDec) + String.valueOf(tempDigitDec));
 			}
 		}
@@ -63,10 +76,10 @@ public class Moves {
 	 * @returns set of possible moves
 	 */
 	private Set<String> moveDownwardRightDiagonal(Set<String> addPosibilePosition, char a) {
-		if (tempDigitInc < 8 && a < 'H') {
+		if (tempDigitInc < lastDigitOnBoard && a < lastCharOnBoard) {
 			tempDigitInc = tempDigitInc + 1;
 			charInc = (char) (charInc + 1);
-			if (charInc <= 'H') {
+			if (charInc <= lastCharOnBoard) {
 				addPosibilePosition.add(String.valueOf(charInc) + String.valueOf(tempDigitInc));
 			}
 		}
@@ -80,10 +93,10 @@ public class Moves {
 	 * @returns set of possible moves
 	 */
 	private Set<String> moveDownwardLeftDiagonal(Set<String> addPosibilePosition, char a) {
-		if (dTemp < 8 && a > 'A') {
+		if (dTemp < lastDigitOnBoard && a > firstCharOnBoard) {
 			dTemp = dTemp + 1;
 			cTemp = (char) (cTemp - 1);
-			if (cTemp >= 'A') {
+			if (cTemp >= firstCharOnBoard) {
 				addPosibilePosition.add(String.valueOf(cTemp) + String.valueOf(dTemp));
 			}
 		}
@@ -97,10 +110,10 @@ public class Moves {
 	 * @returns set of possible moves
 	 */
 	private Set<String> moveUpwardRightDiagonal(char alphaP, Set<String> addPosibilePosition) {
-		if (tempD >= 1 && tempD <= 8 && alphaP >= 'A' && alphaP <= 'H') {
+		if (tempD >= firstDigitOnBoard && tempD <= lastDigitOnBoard && alphaP >= firstCharOnBoard && alphaP <= lastCharOnBoard) {
 			tempD = tempD - 1;
 			tempC = (char) (tempC + 1);
-			if (tempC >= 'A' && tempC <= 'H' && tempD > 0 && tempD < 9) {
+			if (tempC >= firstCharOnBoard && tempC <= lastCharOnBoard && tempD > firstDigitOnBoard-1 && tempD < lastDigitOnBoard+1) {
 				addPosibilePosition.add(String.valueOf(tempC) + String.valueOf(tempD));
 			}
 
@@ -139,10 +152,10 @@ public class Moves {
 	 * 2. horizontal + diagonal (except upward right diagonal) 
 	 * 3. diagonal (except upward right diagonal)
 	 */
-	public Set<String> moveLoopAllHorizontalDiagonalExceptUpwardRightDiagonal(Piece pieceType,
+	public Set<String> moveHorizontalDiagonalExceptUpwardRight(Piece pieceType,
 			Set<String> addPosibilePosition) {
-		for (char a = (char) (alphaP - (char) (alphaP - 1)); a <= 'H'; a++) {
-			if (a >= 'A' && a <= 'H') {
+		for (char a = (char) (alphaP - (char) (alphaP - 1)); a <= lastCharOnBoard; a++) {
+			if (a >= firstCharOnBoard && a <= lastCharOnBoard) {
 				if (pieceType.getPieceType().equals("Queen")) {
 					// Horizontal Movement
 					addPosibilePosition.add(String.valueOf(a) + String.valueOf(digitP));
@@ -169,10 +182,10 @@ public class Moves {
 	 * 1. vertical movement
 	 * 2. diagonal movement
 	 */
-	public Set<String> moveLoopAllVerticalOrDiagonalMovementInUpwardRight(Piece pieceType,
+	public Set<String> moveVerticalOrDiagonalWithUpwardRight(Piece pieceType,
 			Set<String> addPosibilePosition) {
-		if (digitP != 1) {
-			for (int j = digitP - (digitP - 1); j <= 8; j++) {
+		if (digitP != firstDigitOnBoard) {
+			for (int j = digitP - (digitP - 1); j <= lastDigitOnBoard; j++) {
 				if (pieceType.getPieceType().equals("Queen")) {
 					// Vertical movement to handle position apart from A1 to H1
 					addPosibilePosition.add(String.valueOf(alphaP) + String.valueOf(j));
@@ -188,7 +201,7 @@ public class Moves {
 
 			}
 		} else if (pieceType.getPieceType().equals("Queen") || pieceType.getPieceType().equals("Rook")) {
-			for (int j = 2; j <= 8; j++) {
+			for (int j = firstDigitOnBoard+1; j <= lastDigitOnBoard; j++) {
 				// Vertical Movement for position from A1 to H1
 				addPosibilePosition.add(String.valueOf(alphaP) + String.valueOf(j));
 			}
