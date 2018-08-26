@@ -14,7 +14,7 @@ import java.util.Scanner;
 import java.util.Set;
 
 import com.chess.customexception.InvalidPieceException;
-import com.chess.gameingredients.*;
+import com.chess.gamecontents.*;
 
 public class ChessGame {
 

@@ -1,4 +1,4 @@
-package com.chess.gameingredients;
+package com.chess.gamecontents;
 
 import java.util.Set;
 
